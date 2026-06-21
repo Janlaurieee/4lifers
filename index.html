@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>A Special Surprise For You 💖</title>
+  <meta name="description" content="An interactive friendship surprise — show a Finger Heart to reveal a personalized letter and flower bouquet." />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Teachable Machine + TensorFlow.js (loaded from CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+</head>
+<body>
+
+  <!-- ============================================================
+       LOADING SCREEN — shown while model loads
+       ============================================================ -->
+  <div id="loading-screen">
+    <div class="loader-heart"></div>
+    <p class="loader-text">Preparing something special…</p>
+  </div>
+
+  <!-- ============================================================
+       PERMISSION OVERLAY — ask user for camera access
+       ============================================================ -->
+  <div id="permission-overlay">
+    <div class="permission-card">
+      <div class="permission-icon">📸</div>
+      <h2>Allow Camera Access</h2>
+      <p>This surprise needs your camera to detect a special hand gesture. No data is stored — everything runs locally in your browser.</p>
+      <button id="btn-allow-camera" class="btn btn-primary">Allow Camera</button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MAIN APP CONTAINER
+       ============================================================ -->
+  <div id="app-container">
+
+    <!-- ========== CAMERA SECTION ========== -->
+    <section id="camera-section">
+      <h1 class="cam-title">Show Me a Finger Heart 💕</h1>
+      <p class="cam-subtitle">A little gesture can unlock a big surprise…</p>
+
+      <div class="camera-wrapper">
+        <div class="camera-inner">
+          <video id="webcam" autoplay playsinline muted></video>
+          <div class="scan-line"></div>
+          <div class="corner-deco tl"></div>
+          <div class="corner-deco tr"></div>
+          <div class="corner-deco bl"></div>
+          <div class="corner-deco br"></div>
+        </div>
+      </div>
+
+      <!-- Status bar with confidence meter -->
+      <div id="status-bar">
+        <span class="status-dot"></span>
+        <span id="status-text">Waiting for gesture…</span>
+        <div id="confidence-bar-wrap">
+          <div id="confidence-bar"></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ============================================================
+       SURPRISE / CELEBRATION SECTION (hidden by default)
+       ============================================================ -->
+  <section id="surprise-section">
+    <!-- Canvas for particle effects (hearts, sparkles, petals) -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Growing flower garden (behind letter, in front of particles) -->
+    <div id="flower-garden"></div>
+
+    <!-- Letter Card -->
+    <div id="letter-card">
+      <div class="letter-header">
+        <h2>Dear Best Friend 💗</h2>
+        <div class="letter-divider"></div>
+      </div>
+
+      <div id="letter-body"></div>
+
+      <div class="letter-sign" id="letter-sign">
+        With all my love,<br/>Your Best Friend Forever 💖
+      </div>
+
+      <div class="letter-actions" id="letter-actions">
+        <button id="btn-replay" class="btn btn-primary">✨ Replay</button>
+        <button id="btn-email" class="btn btn-primary">💌 Send via Email</button>
+        <button id="btn-close" class="btn btn-secondary">Close</button>
+      </div>
+    </div>
+
+    <!-- Flower Bouquet -->
+    <div id="bouquet-container">
+      <img id="bouquet-img" src="assets/bouquet.png" alt="Flower Bouquet" />
+    </div>
+  </section>
+
+  <!-- ============================================================
+       REPLAY BAR (shown after closing the surprise)
+       ============================================================ -->
+  <div id="replay-bar">
+    <button id="btn-replay-bar" class="btn btn-primary">💐 See the surprise again</button>
+  </div>
+
+  <!-- Main application script -->
+  <script src="app.js"></script>
+</body>
+</html>
